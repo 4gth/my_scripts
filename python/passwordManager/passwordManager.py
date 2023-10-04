@@ -155,7 +155,7 @@ class User:  #   class for functions that manager user credentials.
                 return False
 
 
-class menus:  #   class for functions that create and format menus.
+class Menus:  #   class for functions that create and format Menus.
     #                           mainMenu() allows user to create a new user or login.
     #                           loggedIn() allows loggined in user to view/create
     #                           passwd.db entries.
@@ -306,7 +306,7 @@ class UserInput:  #   class for handling user input via the terminal.
 
 
 def navigate():  # function for mainMenu logic.
-    menus.mainMenu()
+    Menus.mainMenu()
     # call makeSelection() using match: case: determine what the user wants.
     match UserInput.makeSelection():
         # case 1 is create new user.
@@ -352,11 +352,11 @@ def navigate():  # function for mainMenu logic.
             # if True: exit()
             if not PasswordEntry.isCrypted:
                 PasswordEntry.cryptFile("", True)
-            menus.exit()
+            Menus.exit()
 
 
-def menuLoggedIn():  # function for menus logic when the user is logged in.
-    menus.loggedIn()
+def menuLoggedIn():  # function for Menus logic when the user is logged in.
+    Menus.loggedIn()
     # once logged in, check passwd.db if it is encrypted.
     # if True: de-crypt
     # if False ask for input
@@ -366,7 +366,7 @@ def menuLoggedIn():  # function for menus logic when the user is logged in.
     match UserInput.makeSelection():
         # case 1 is to display passwd.db entries
         case 1:
-            menus.displayEntries(passdb)
+            Menus.displayEntries(passdb)
             menuLoggedIn()
         # case 2 is to create a new entry in passwd.db
         case 2:
