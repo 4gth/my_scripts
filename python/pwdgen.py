@@ -12,27 +12,27 @@ parser.add_argument("-n", help="Set use of numbers in generated passwords", acti
 args = parser.parse_args()
 
 # Set variables to be used in main function, by default with no args passed will generate 1 password 8 characters long with no symbols or numbers
-password_length = args.l or 8
-number_of_passwords = args.g or 1
-include_symbols = args.s
-include_numbers = args.n
+passwordLength = args.l or 8
+numberOfPasswords = args.g or 1
+includeSymbols = args.s
+includeNumbers = args.n
 
 
 # Main function that takes arguments and generates a string of random letters, numbers and symbols
-def generate_password(length, include_symbols, include_numbers):
+def GeneratePassword(length, includeSymbols, includeNumbers):
     characters = string.ascii_letters
 	
-    if include_symbols:
+    if includeSymbols:
        characters += string.punctuation
 		
-    if include_numbers:
+    if includeNumbers:
         characters += string.digits
 
     password = ''.join(random.choice(characters) for _ in range (length))
     return password
 
-# calls generate_password function as many times as required by the -g argument
-passwords = '\n'.join(generate_password(password_length, include_symbols, include_numbers) for _ in range(number_of_passwords))
+# calls GeneratePassword function as many times as required by the -g argument
+passwords = '\n'.join(GeneratePassword(passwordLength, includeSymbols, includeNumbers) for _ in range(numberOfPasswords))
 
 
 print(passwords)
