@@ -52,32 +52,33 @@ class PasswordEntry:  #   class for functions that deal with creating new
         xorByte = key.encode("utf-8")
         # open passwd.db as bytes type
         # for each byte in passwd.db XOR it with key=
-        if run:
-            with open(passdb, "rb") as passwords:
-                outXorList = []
-                while True:  # if file still has bytes remaining.
-                    byte = passwords.read(1)
-                    if not byte:
-                        break
-                    outXor = bytes([byte[0] ^ xorByte[0]])
-                    outXorList.append(outXor)
-            # once all bytes are XORd write XORd bytes to passwd.db
-            with open(passdb, "wb") as passwords:
-                for xordbytes in outXorList:
-                    passwords.write(xordbytes)
-            PasswordEntry.isCrypted != PasswordEntry.isCrypted
-        # check to see if the passwd.db file is decrypted or not using
-        # a simple string match on 'http'.
-        with open(passdb, "r") as passwords:
-            # if http is in row checkurl += 1
-            checkurl = [rows for rows in passwords if "http" in rows]
-            if len(checkurl) > 0:  # if list is > 0 it contains plaintext
-                # with http string meaning not crypted.
-                PasswordEntry.isCrypted = False
-                return False
-            else:
-                PasswordEntry.isCrypted = True
-                return True
+        if not PasswordEntry.isCrypted:
+            if run:
+                with open(passdb, "rb") as passwords:
+                    outXorList = []
+                    while True:  # if file still has bytes remaining.
+                        byte = passwords.read(1)
+                        if not byte:
+                            break
+                        outXor = bytes([byte[0] ^ xorByte[0]])
+                        outXorList.append(outXor)
+                # once all bytes are XORd write XORd bytes to passwd.db
+                with open(passdb, "wb") as passwords:
+                    for xordbytes in outXorList:
+                        passwords.write(xordbytes)
+                PasswordEntry.isCrypted != PasswordEntry.isCrypted
+            # check to see if the passwd.db file is decrypted or not using
+            # a simple string match on 'http'.
+            with open(passdb, "r") as passwords:
+                # if http is in row checkurl += 1
+                checkurl = [rows for rows in passwords if "http" in rows]
+                if len(checkurl) > 0:  # if list is > 0 it contains plaintext
+                    # with http string meaning not crypted.
+                    PasswordEntry.isCrypted = False
+                    return False
+                else:
+                    PasswordEntry.isCrypted = True
+                    return True
 
     # function for validating URL,this will ensure entries stay nice and formatted.
     def urlValidator(self):
